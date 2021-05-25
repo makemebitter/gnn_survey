@@ -164,7 +164,7 @@ Based on the general spatial graph convolution, we can now go on to define the u
 \label{eq:nn4g}
 \mathbf{h}_v ^k = \mathbf{W}_V^k~\mathbf{x}_v + \mathbf{W}_U^k \sum_{u \in \hat {\mathcal {N}}(v)} \mathbf{h}_u^{k-1},
 \end{gather}
-where $\mathbf{W}_V^k$ is the k-th layer weight matrix associated with the node features while $\mathbf{W}_U^k$ is the weight matrix associated with the aggregated neighbor features.
+where $\mathbf{W}_V^k$ is the k-th layer weight matrix associated with the node features while $\mathbf{W}_U^k$ is the weight matrix associated with the aggregated neighbor features. Obviously, this update rule is incomplete until we add an activation function to operate on the right hand side. For the sake of simplicity, we omit all the activation functions from update rules from now on.
 
 Commonly, the update rule can be re-written in matrix form to express the convolution on the entire graph:
 \begin{gather}
