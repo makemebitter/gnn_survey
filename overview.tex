@@ -91,11 +91,11 @@ Convolutional neural networks (CNNs) have proven successful in capturing shift-i
 \vspace{2mm}
 \noindent \textbf{Image convolution.} The convolution on an image $I(x, y)$ by a weighted filter $\omega(x,y)$ with size $a \times b$ is defined as:
 \begin{gather}
-I'(x, y) = \omega \ast I(x, y) = \sum_{dx = -a}^{a}\sum_{dy=-b}^{b}\omega(dx, dy)I(x + dx, y + dy),
+I'(x, y) = \omega(x, y) \ast I(x, y) = \sum_{dx = -a}^{a}\sum_{dy=-b}^{b}\omega(dx, dy)I(x + dx, y + dy),
 \end{gather}
 where $I'(x, y)$ is the filtered image. This operation can be thought as first flipping the image both horizontally and vertically, then `sliding' the filter on the image to conduct point-wise product followed by sum. We now give an example. Let $I(x, y)$ to be an $5 \times 5$ single-channel image. We first flip it and it results in $\tilde I(x, y)$ and we explicit write out the pixel values of the $[2, 2]$ subimage of $\tilde I(x, y)$:
 \begin{gather}
-\tilde I(x, y) = \left(
+\tilde I= \left(
 \begin{array}{ccccc}
  p_0 & p_1 & p_2 & \text{pixel} & \text{pixel} \\
  p_3 & p_4 & p_5 & \text{pixel} & \text{pixel} \\
@@ -107,7 +107,7 @@ where $I'(x, y)$ is the filtered image. This operation can be thought as first f
 \end{gather}
 and a $3 \times 3$ filter $\omega(x, y)$ be written as: 
 \begin{gather}
-\omega(x, y) = \left(
+\omega = \left(
 \begin{array}{ccc}
  w_0 & w_1 & w_2 \\
  w_3 & w_4 & w_5 \\
@@ -115,14 +115,14 @@ and a $3 \times 3$ filter $\omega(x, y)$ be written as:
 \end{array}
 \right).
 \end{gather}
-Then after the filtering, the value at the location $(2, 2)$ of the filtered image is:
+Then after the filtering, the value at the location $(1, 1)$ of the filtered image is:
 \begin{gather}
 \label{eq:conveg}
-I'(2, 2) = p_0 w_0 + p_1 w_1 + p_2 w_2 + ... = \sum_{i = 0}^8 p_i w_i.
+I'(1, 1) = p_0 w_0 + p_1 w_1 + p_2 w_2 + ... = \sum_{i = 0}^8 p_i w_i.
 \end{gather}
 Note this is exactly a weighted sum of the pixel values surrounding spatial location $p_4$. The shape and size of the filter defines the scope of this summation. Now if we consider the image to be a graph, and each spatial location represents a node with the pixel value being the node feature, and add an edge from each node to its surrounding nodes (including diagonal and anti diagonal), we can rewrite Equation~\ref{eq:conveg} to be:
 \begin{gather}
-I'(2, 2) = \sum_{p_i \in \mathcal {N}(p_4)} p_i w_i,
+I'(1, 1) = \sum_{p_i \in \mathcal {N}(p_4)} p_i w_i,
 \end{gather}
 or in general:
 \begin{gather}
