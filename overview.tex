@@ -122,16 +122,16 @@ I'(1, 1) = p_0 w_0 + p_1 w_1 + p_2 w_2 + ... = \sum_{i = 0}^8 p_i w_i.
 \end{gather}
 Note this is exactly a weighted sum of the pixel values surrounding spatial location $p_4$. The shape and size of the filter defines the scope of this summation. Now if we consider the image to be a graph, and each spatial location represents a node with the pixel value being the node feature, and add an edge from each node to its surrounding nodes (including diagonal and anti diagonal), we can rewrite Equation~\ref{eq:conveg} to be:
 \begin{gather}
-I'(1, 1) = \sum_{p_i \in \mathcal {N}(p_4)} p_i w_i,
+I'(1, 1) = \sum_{i \in \mathcal {N}((x, y))} p_i w_i,
 \end{gather}
 or in general:
 \begin{gather}
-I'(x, y) = \sum_{p_i \in \mathcal {N}(\tilde I(x, y))} p_i w_i.
+I'(x, y) = \sum_{i \in \mathcal {N}((x, y))} p_i w_i.
 \end{gather}
 If the image is multi-channel, meaning each spatial location has, instead of a scalar, a vector of pixel values. The convolution can be written as:
 \begin{gather}
 \label{eq:imgconv}
-I'(x, y) = \sum_{p_i \in \mathcal {N}(\tilde I(x, y))} \mathbf{p}_i \mathbf{w}_i.
+I'(x, y) = \sum_{i \in \mathcal {N}((x, y))} \mathbf{p}_i \mathbf{w}_i.
 \end{gather}
 With this convenient form, we may now move on to define the spatial graph convolution in analogy. However, there are two distinctions between an image and a graph: 1. image nodes have a fixed number of neighbors, defined by the filter. 2. image node neighbors have an implicit ordering, also defined by the ordering of the filter. In a graph, the number of neighbors could vary from node to node, and the neighbors may be unordered (not positional). 
 
@@ -145,7 +145,7 @@ For graphs where we can safely assume a maximum degree and the ordering of the n
 NN4G~\cite{nn4g} was among the first works to introduce convolution operation on a graph. When it comes to the definition of graph convolution, it is tempting to try to use the definition in Equation~\ref{eq:imgconv}. However, as mentioned above, this definition would require the graph to be positional, and each node has a fixed degree. If we relax the requirements of a fixed degree but assume that there is a finite set of edges (the edges could be distinguished by the edge features, their directions, or by order in positional graphs), we can then share the weights within each edge type. This is called the stationary assumption. The definition in this scenario is as follows.
 
 \vspace{2mm}
-\noindent \textbf{Spatial graph convolution with stationary assumption.} The convolution of a filter $\omega$ on a graph $G$ is defined as:
+\noindent \textbf{Spatial graph convolution with stationarity assumption.} The convolution of a filter $\omega$ on a graph $G$ is defined as:
 
 \begin{gather}
 (\omega \ast \mathbf{X}_V) (v) = \sum_{u \in \mathcal {N}(v)} \mathbf{w}_{e_{uv}} \mathbf{h}_u,
@@ -250,7 +250,7 @@ where $\hat {\mathbf{X}}_V$ is the transformed node features. Spectral methods t
 \begin{gather}
 \label{eq:spectralconv}
 \begin{split}
-\mathbf{\Theta} \ast \mathbf{X}_V & = \mathcal{F}^{-1}(\mathcal{F}(\mathbf{\Omega}) \odot \mathcal{F}(\mathbf{X}_V)) \\
+\mathbf{\Theta} \ast \mathbf{X}_V & = \mathcal{F}^{-1}(\mathcal{F}(\mathbf{\Theta}) \odot \mathcal{F}(\mathbf{X}_V)) \\
 & = ((\mathbf{\Theta}~\mathbf{Q}) \odot (\mathbf{X}_V~\mathbf{Q}))~\mathbf{Q}^\intercal,
 \end{split}
 \end{gather}
